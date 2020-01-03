@@ -1,6 +1,7 @@
 package com.atguigu.gmall.pms.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -89,9 +90,19 @@ public class CategoryController {
     @PostMapping("/delete")
     @PreAuthorize("hasAuthority('pms:category:delete')")
     public Resp<Object> delete(@RequestBody Long[] catIds){
-		categoryService.removeByIds(Arrays.asList(catIds));
+        for (int i = 0; i <catIds.length; i++) {
+            System.out.println(catIds[i]);
+        }
+        categoryService.removeByIds(Arrays.asList(catIds));
 
         return Resp.ok(null);
+    }
+
+    @GetMapping
+    public Resp<List<CategoryEntity>> getCategories(@RequestParam(value = "level",defaultValue = "0") Integer level
+            ,@RequestParam(value = "parentCid",required = false) Long pid){
+        List<CategoryEntity> categories = categoryService.queryCategoriesByLevelOrPid(level,pid);
+        return Resp.ok(categories);
     }
 
 }
