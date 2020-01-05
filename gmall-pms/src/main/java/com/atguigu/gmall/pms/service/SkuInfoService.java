@@ -5,6 +5,8 @@ import com.atguigu.gmall.pms.entity.SkuInfoEntity;
 import com.atguigu.core.bean.PageVo;
 import com.atguigu.core.bean.QueryCondition;
 
+import java.util.List;
+
 
 /**
  * sku信息
@@ -16,5 +18,7 @@ import com.atguigu.core.bean.QueryCondition;
 public interface SkuInfoService extends IService<SkuInfoEntity> {
 
     PageVo queryPage(QueryCondition params);
+
+    List<SkuInfoEntity> querySkuInfosBySpuId(Long spuId);
 }
 

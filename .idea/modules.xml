@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/gamall.sms.interface/gamall.sms.interface.iml" filepath="$PROJECT_DIR$/gamall.sms.interface/gamall.sms.interface.iml" />
       <module fileurl="file://$PROJECT_DIR$/gmall.iml" filepath="$PROJECT_DIR$/gmall.iml" />
       <module fileurl="file://$PROJECT_DIR$/gmall-admin/gmall-admin.iml" filepath="$PROJECT_DIR$/gmall-admin/gmall-admin.iml" />
       <module fileurl="file://$PROJECT_DIR$/gmall-core/gmall-core.iml" filepath="$PROJECT_DIR$/gmall-core/gmall-core.iml" />

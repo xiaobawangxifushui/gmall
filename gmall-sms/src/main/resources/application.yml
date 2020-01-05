@@ -15,3 +15,6 @@ spring:
     host: 192.168.81.130
 mybatis-plus:
   mapper-locations: mapper/sms/**/*.xml
+  global-config:
+        db-config:
+          id-type: auto

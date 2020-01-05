@@ -74,4 +74,10 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         return attrGroupVo;
     }
 
+    @Override
+    public List<AttrGroupVo> queryAttrGroupVosByCid(Long catId) {
+        List<AttrGroupEntity> attrGroupEntities = this.list(new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catId));
+        return attrGroupEntities.stream().map(attrGroupEntity -> this.queryGroupVo(attrGroupEntity.getAttrGroupId())).collect(Collectors.toList());
+    }
+
 }
