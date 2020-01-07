@@ -1,9 +1,12 @@
 package com.atguigu.gmall.pms.service;
 
+import com.atguigu.gmall.pms.vo.SpuInfoVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.atguigu.gmall.pms.entity.SpuInfoDescEntity;
 import com.atguigu.core.bean.PageVo;
 import com.atguigu.core.bean.QueryCondition;
+
+import java.util.List;
 
 
 /**
@@ -16,5 +19,7 @@ import com.atguigu.core.bean.QueryCondition;
 public interface SpuInfoDescService extends IService<SpuInfoDescEntity> {
 
     PageVo queryPage(QueryCondition params);
+
+    List<String> saveSpuDesc(SpuInfoVo spuInfoVo, Long spuId);
 }
 

@@ -1,6 +1,7 @@
 package com.atguigu.gmall.pms.service.impl;
 
 
+import com.atguigu.gmall.pms.dao.AttrDao;
 import com.atguigu.gmall.pms.dao.SkuInfoDao;
 import com.atguigu.gmall.pms.dao.SpuInfoDescDao;
 import com.atguigu.gmall.pms.entity.*;
@@ -10,6 +11,7 @@ import com.atguigu.gmall.pms.vo.BaseAttrVo;
 import com.atguigu.gmall.pms.vo.SkuInfoVo;
 import com.atguigu.gmall.pms.vo.SpuInfoVo;
 import com.atguigu.gmall.sms.vo.SaleVo;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import com.atguigu.gmall.pms.dao.SpuInfoDao;
 import org.springframework.util.CollectionUtils;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -47,6 +50,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     private SkuImagesService imagesService;
     @Autowired
     private GmallSmsClient smsClient;
+    @Autowired
+    private AttrDao attrDao;
+    @Autowired
+    private SpuInfoDescService spuInfoDescService;
 
     @Override
     public PageVo queryPage(QueryCondition params) {
@@ -71,35 +78,24 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         IPage<SpuInfoEntity> page = this.page(new Query<SpuInfoEntity>().getPage(queryCondition), wrapper);
         return new PageVo(page);
     }
-
+    @GlobalTransactional
     @Override
     public void bigSave(SpuInfoVo spuInfoVo) {
-        spuInfoVo.setCreateTime(new Date());
-        spuInfoVo.setUodateTime(spuInfoVo.getCreateTime());
-        this.save(spuInfoVo);
+        saveSpuInfoVo(spuInfoVo);
         Long spuId = spuInfoVo.getId();
+        //System.out.println(spuId);
 
-        List<BaseAttrVo> baseAttrs = spuInfoVo.getBaseAttrs();
-        if (!CollectionUtils.isEmpty(baseAttrs)){
-            List<ProductAttrValueEntity> collect = baseAttrs.stream().map(baseAttrVo -> {
-                ProductAttrValueEntity productAttrValueEntity = new ProductAttrValueEntity();
-                BeanUtils.copyProperties(baseAttrVo, productAttrValueEntity);
-                productAttrValueEntity.setSpuId(spuId);
-                productAttrValueEntity.setAttrSort(0);
-                productAttrValueEntity.setQuickShow(1);
-                return productAttrValueEntity;
-            }).collect(Collectors.toList());
-            productAttrValueService.saveBatch(collect);
-        }
+        saveBaseAttrs(spuInfoVo, spuId);
 
-        List<String> images = spuInfoVo.getSpuImages();
-        if (!CollectionUtils.isEmpty(images)){
-            SpuInfoDescEntity spuInfoDescEntity = new SpuInfoDescEntity();
-            spuInfoDescEntity.setDecript(StringUtils.join(images,","));
-            spuInfoDescEntity.setSpuId(spuId);
-            descDao.insert(spuInfoDescEntity);
-        }
+        List<String> images = saveSpuDesc(spuInfoVo, spuId);
+        //List<String> images = spuInfoDescService.saveSpuDesc(spuInfoVo, spuId);
+        saveSkus(spuInfoVo, spuId, images);
 
+        //int a = 1/0;
+
+    }
+
+    public void saveSkus(SpuInfoVo spuInfoVo, Long spuId, List<String> images) {
         List<SkuInfoVo> skus = spuInfoVo.getSkus();
         skus.stream().forEach(sku ->{
             List<String> skuImages = sku.getImages();
@@ -115,6 +111,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
             List<SkuSaleAttrValueEntity> saleAttrs = sku.getSaleAttrs();
             saleAttrs.forEach(sale ->{
+                sale.setAttrName(attrDao.selectOne(new QueryWrapper<AttrEntity>().eq("attr_id",sale.getAttrId())).getAttrName());
                 sale.setAttrSort(0);
                 sale.setSkuId(skuId);
             });
@@ -135,10 +132,38 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             smsClient.saveSale(saleVo);
 
         });
+    }
 
+    public List<String> saveSpuDesc(SpuInfoVo spuInfoVo, Long spuId) {
+        List<String> images = spuInfoVo.getSpuImages();
+        if (!CollectionUtils.isEmpty(images)){
+            SpuInfoDescEntity spuInfoDescEntity = new SpuInfoDescEntity();
+            spuInfoDescEntity.setDecript(StringUtils.join(images,","));
+            spuInfoDescEntity.setSpuId(spuId);
+            descDao.insert(spuInfoDescEntity);
+        }
+        return images;
+    }
 
+    public void saveBaseAttrs(SpuInfoVo spuInfoVo, Long spuId) {
+        List<BaseAttrVo> baseAttrs = spuInfoVo.getBaseAttrs();
+        if (!CollectionUtils.isEmpty(baseAttrs)){
+            List<ProductAttrValueEntity> collect = baseAttrs.stream().map(baseAttrVo -> {
+                ProductAttrValueEntity productAttrValueEntity = new ProductAttrValueEntity();
+                BeanUtils.copyProperties(baseAttrVo, productAttrValueEntity);
+                productAttrValueEntity.setSpuId(spuId);
+                productAttrValueEntity.setAttrSort(0);
+                productAttrValueEntity.setQuickShow(1);
+                return productAttrValueEntity;
+            }).collect(Collectors.toList());
+            productAttrValueService.saveBatch(collect);
+        }
+    }
 
-
+    public void saveSpuInfoVo(SpuInfoVo spuInfoVo) {
+        spuInfoVo.setCreateTime(new Date());
+        spuInfoVo.setUodateTime(spuInfoVo.getCreateTime());
+        this.save(spuInfoVo);
     }
 
 }
