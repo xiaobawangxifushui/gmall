@@ -1,13 +1,18 @@
 package com.atguigu.gmall.pms.controller;
 
 import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
+
 
 
 import com.atguigu.core.bean.PageVo;
+import com.atguigu.core.bean.Query;
 import com.atguigu.core.bean.QueryCondition;
 import com.atguigu.core.bean.Resp;
+
 import com.atguigu.gmall.pms.vo.SpuInfoVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +56,13 @@ public class SpuInfoController {
 
         return Resp.ok(page);
     }
+    @PostMapping("/page")
+    public Resp<List<SpuInfoEntity>> querySkuInfoByPagr(@RequestBody QueryCondition condition){
+        IPage<SpuInfoEntity> page = spuInfoService.page(new Query<SpuInfoEntity>().getPage(condition),
+                new QueryWrapper<SpuInfoEntity>().eq("publish_status", "1"));
+        List<SpuInfoEntity> spuInfoEntities = page.getRecords();
+        return  Resp.ok(spuInfoEntities);
+    }
 
 
     /**
@@ -61,9 +73,9 @@ public class SpuInfoController {
     @PreAuthorize("hasAuthority('pms:spuinfo:info')")
     public Resp<SpuInfoEntity> info(@PathVariable("id") Long id){
 		SpuInfoEntity spuInfo = spuInfoService.getById(id);
-
         return Resp.ok(spuInfo);
     }
+
 
     /**
      * 保存

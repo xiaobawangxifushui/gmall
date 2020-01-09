@@ -13,9 +13,12 @@
         <module name="gmall-generator" />
         <module name="gmall-oms" />
         <module name="gmall-pms" />
+        <module name="gmall-pms-interface" />
+        <module name="gmall-search" />
         <module name="gmall-sms" />
         <module name="gmall-ums" />
         <module name="gmall-wms" />
+        <module name="gmall-wms-interface" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -27,9 +30,12 @@
       <module name="gmall-generator" target="1.8" />
       <module name="gmall-oms" target="1.8" />
       <module name="gmall-pms" target="1.8" />
+      <module name="gmall-pms-interface" target="1.8" />
+      <module name="gmall-search" target="1.8" />
       <module name="gmall-sms" target="1.8" />
       <module name="gmall-ums" target="1.8" />
       <module name="gmall-wms" target="1.8" />
+      <module name="gmall-wms-interface" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
