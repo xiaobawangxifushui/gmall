@@ -9,3 +9,5 @@ spring:
   elasticsearch:
     rest:
       uris: 192.168.81.130:9200
+  jackson:
+    default-property-inclusion: non_null
