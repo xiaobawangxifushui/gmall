@@ -11,6 +11,7 @@
         <module name="gmall-core" />
         <module name="gmall-gateway" />
         <module name="gmall-generator" />
+        <module name="gmall-index" />
         <module name="gmall-oms" />
         <module name="gmall-pms" />
         <module name="gmall-pms-interface" />
@@ -28,6 +29,7 @@
       <module name="gmall-core" target="1.8" />
       <module name="gmall-gateway" target="1.8" />
       <module name="gmall-generator" target="1.8" />
+      <module name="gmall-index" target="1.8" />
       <module name="gmall-oms" target="1.8" />
       <module name="gmall-pms" target="1.8" />
       <module name="gmall-pms-interface" target="1.8" />

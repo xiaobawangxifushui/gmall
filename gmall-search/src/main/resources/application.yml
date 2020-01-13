@@ -11,3 +11,8 @@ spring:
       uris: 192.168.81.130:9200
   jackson:
     default-property-inclusion: non_null
+  rabbitmq:
+    host: 192.168.81.130
+    virtual-host: /yy
+    username: yycompany
+    password: yycompany

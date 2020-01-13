@@ -16,10 +16,7 @@ import java.io.IOException;
 public class SearchController {
     @Autowired
     private SearchService searchService;
-    @GetMapping("/ss")
-    public String hh(){
-        return "fff";
-    }
+
     @GetMapping
     public Resp<SearchResponseVo>  search(SearchParem searchParem) throws IOException {
         SearchResponseVo search = searchService.search(searchParem);

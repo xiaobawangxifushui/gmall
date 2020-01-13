@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/gmall-core/gmall-core.iml" filepath="$PROJECT_DIR$/gmall-core/gmall-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/gmall-gateway/gmall-gateway.iml" filepath="$PROJECT_DIR$/gmall-gateway/gmall-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/gmall-generator/gmall-generator.iml" filepath="$PROJECT_DIR$/gmall-generator/gmall-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gmall-index/gmall-index.iml" filepath="$PROJECT_DIR$/gmall-index/gmall-index.iml" />
       <module fileurl="file://$PROJECT_DIR$/gmall-oms/gmall-oms.iml" filepath="$PROJECT_DIR$/gmall-oms/gmall-oms.iml" />
       <module fileurl="file://$PROJECT_DIR$/gmall-pms/gmall-pms.iml" filepath="$PROJECT_DIR$/gmall-pms/gmall-pms.iml" />
       <module fileurl="file://$PROJECT_DIR$/gmall-pms-interface/gmall-pms-interface.iml" filepath="$PROJECT_DIR$/gmall-pms-interface/gmall-pms-interface.iml" />
