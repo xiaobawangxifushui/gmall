@@ -6,12 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="gamall-sms-interface" />
         <module name="gamall.sms.interface" />
         <module name="gmall-admin" />
         <module name="gmall-core" />
         <module name="gmall-gateway" />
         <module name="gmall-generator" />
         <module name="gmall-index" />
+        <module name="gmall-item" />
         <module name="gmall-oms" />
         <module name="gmall-pms" />
         <module name="gmall-pms-interface" />
@@ -23,6 +25,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="gamall-sms-interface" target="1.8" />
       <module name="gamall.sms.interface" target="1.8" />
       <module name="gmall" target="1.8" />
       <module name="gmall-admin" target="1.8" />
@@ -30,6 +33,7 @@
       <module name="gmall-gateway" target="1.8" />
       <module name="gmall-generator" target="1.8" />
       <module name="gmall-index" target="1.8" />
+      <module name="gmall-item" target="1.8" />
       <module name="gmall-oms" target="1.8" />
       <module name="gmall-pms" target="1.8" />
       <module name="gmall-pms-interface" target="1.8" />

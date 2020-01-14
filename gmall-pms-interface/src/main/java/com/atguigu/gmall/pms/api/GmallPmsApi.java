@@ -4,6 +4,7 @@ import com.atguigu.core.bean.QueryCondition;
 import com.atguigu.core.bean.Resp;
 import com.atguigu.gmall.pms.entity.*;
 import com.atguigu.gmall.pms.vo.CategoryVo;
+import com.atguigu.gmall.pms.vo.ItemGroupVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,4 +35,20 @@ public interface GmallPmsApi {
 
     @GetMapping("pms/productattrvalue/{spuId}")
     public Resp<List<ProductAttrValueEntity>> queryProBySkuId(@PathVariable("spuId")Long spuId);
+
+    @GetMapping("pms/skuinfo/info/{skuId}")
+    public Resp<SkuInfoEntity> querySkuById(@PathVariable("skuId") Long skuId);
+
+    @GetMapping("pms/skuimages/{skuId}")
+    public Resp<List<SkuImagesEntity>>  queryImageBySkuId(@PathVariable("skuId")Long skuId);
+
+    @GetMapping("pms/attrgroup/getGroup")
+    public Resp<List<ItemGroupVo>> queryItemGroupVo(@RequestParam("cid")Long cid,
+                                                    @RequestParam("spuId")Long spuId);
+
+    @GetMapping("pms/skusaleattrvalue/{spuId}")
+    public Resp<List<SkuSaleAttrValueEntity>> querySaleAttrBySpuId(@PathVariable("spuId")Long spuId);
+
+    @GetMapping("pms/spuinfodesc/info/{spuId}")
+    public Resp<SpuInfoDescEntity> desc(@PathVariable("spuId") Long spuId);
 }
