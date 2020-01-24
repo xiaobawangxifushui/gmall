@@ -72,20 +72,26 @@ public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsDao, SkuBoundsEnt
         List<ItemSaleVo> saleVos = new ArrayList<>();
         ItemSaleVo bound = new ItemSaleVo();
         SkuBoundsEntity skuBoundsEntity = this.getOne(new QueryWrapper<SkuBoundsEntity>().eq("sku_id", skuId));
-        bound.setType("积分");
-        bound.setDesc("赠送"+ skuBoundsEntity.getGrowBounds()+"成长积分,"+skuBoundsEntity.getBuyBounds()+"消费积分");
+        if (skuBoundsEntity!=null){
+            bound.setType("积分");
+            bound.setDesc("赠送"+ skuBoundsEntity.getGrowBounds()+"成长积分,"+skuBoundsEntity.getBuyBounds()+"消费积分");
+        }
         saleVos.add(bound);
 
         ItemSaleVo full = new ItemSaleVo();
         SkuFullReductionEntity fullReductionEntity = reductionDao.selectOne(new QueryWrapper<SkuFullReductionEntity>().eq("sku_id", skuId));
-        full.setType("满减");
-        full.setDesc("满"+fullReductionEntity.getFullPrice()+"减"+fullReductionEntity.getReducePrice());
+        if (fullReductionEntity!=null){
+            full.setType("满减");
+            full.setDesc("满"+fullReductionEntity.getFullPrice()+"减"+fullReductionEntity.getReducePrice());
+        }
         saleVos.add(full);
 
         ItemSaleVo ladder = new ItemSaleVo();
         SkuLadderEntity skuLadderEntity = skuLadderDao.selectOne(new QueryWrapper<SkuLadderEntity>().eq("sku_id", skuId));
-        ladder.setType("打折");
-        ladder.setDesc("满"+skuLadderEntity.getFullCount()+"件,打"+skuLadderEntity.getDiscount().divide(new BigDecimal(10))+"折");
+        if (skuBoundsEntity!=null){
+            ladder.setType("打折");
+            ladder.setDesc("满"+skuLadderEntity.getFullCount()+"件,打"+skuLadderEntity.getDiscount().divide(new BigDecimal(10))+"折");
+        }
         saleVos.add(ladder);
         return saleVos;
     }

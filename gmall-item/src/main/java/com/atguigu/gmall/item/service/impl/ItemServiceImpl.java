@@ -40,6 +40,7 @@ public class ItemServiceImpl implements ItemService {
             Resp<SkuInfoEntity> skuInfoEntityResp = pmsClient.querySkuById(skuId);
             SkuInfoEntity skuInfoEntity = skuInfoEntityResp.getData();
             if (skuInfoEntity == null) {
+                itemVo.setSkuId(null);
                 return null;
             }
             itemVo.setSkuTitle(skuInfoEntity.getSkuTitle());
@@ -68,6 +69,9 @@ public class ItemServiceImpl implements ItemService {
 
 
         CompletableFuture<Void> spuCompletableFuture = skuCompletableFuture.thenAcceptAsync(skuInfoEntity -> {
+            if (skuInfoEntity == null) {
+                return ;
+            }
             itemVo.setSpuId(skuInfoEntity.getSpuId());
             Resp<SpuInfoEntity> spuInfoEntityResp = pmsClient.info(skuInfoEntity.getSpuId());
             SpuInfoEntity spuInfoEntity = spuInfoEntityResp.getData();
@@ -77,12 +81,18 @@ public class ItemServiceImpl implements ItemService {
         },threadPool);
 
         CompletableFuture<Void> descCompletableFuture = skuCompletableFuture.thenAcceptAsync(skuInfoEntity -> {
+            if (skuInfoEntity == null) {
+                return ;
+            }
             Resp<SpuInfoDescEntity> desc = pmsClient.desc(skuInfoEntity.getSpuId());
             SpuInfoDescEntity spuInfoDescEntity = desc.getData();
             itemVo.setDesc(spuInfoDescEntity);
         },threadPool);
 
         CompletableFuture<Void> brandCompletableFuture = skuCompletableFuture.thenAcceptAsync(skuInfoEntity -> {
+            if (skuInfoEntity == null) {
+                return ;
+            }
             Resp<BrandEntity> brandEntityResp = pmsClient.queryBrand(skuInfoEntity.getBrandId());
             BrandEntity brandEntity = brandEntityResp.getData();
             if (brandEntity != null) {
@@ -92,6 +102,9 @@ public class ItemServiceImpl implements ItemService {
         },threadPool);
 
         CompletableFuture<Void> categoryCompletableFuture = skuCompletableFuture.thenAcceptAsync(skuInfoEntity -> {
+            if (skuInfoEntity == null) {
+                return ;
+            }
             Resp<CategoryEntity> categoryEntityResp = pmsClient.queryCate(skuInfoEntity.getCatalogId());
             CategoryEntity categoryEntity = categoryEntityResp.getData();
             if (categoryEntity != null) {
@@ -108,6 +121,9 @@ public class ItemServiceImpl implements ItemService {
         },threadPool);
 
         CompletableFuture<Void> groupCompletableFuture = skuCompletableFuture.thenAcceptAsync(skuInfoEntity -> {
+            if (skuInfoEntity == null) {
+                return ;
+            }
             Resp<List<ItemGroupVo>> groupResp = pmsClient.queryItemGroupVo(skuInfoEntity.getCatalogId(), skuInfoEntity.getSpuId());
             List<ItemGroupVo> itemGroupVos = groupResp.getData();
             itemVo.setItemGroupVos(itemGroupVos);
@@ -115,6 +131,9 @@ public class ItemServiceImpl implements ItemService {
 
 
         CompletableFuture<Void> attrCompletableFuture = skuCompletableFuture.thenAcceptAsync(skuInfoEntity -> {
+            if (skuInfoEntity == null) {
+                return ;
+            }
             Resp<List<SkuSaleAttrValueEntity>> salesResp = pmsClient.querySaleAttrBySpuId(skuInfoEntity.getSpuId());
             List<SkuSaleAttrValueEntity> skuSaleAttrValueEntities = salesResp.getData();
             itemVo.setSaleAttrs(skuSaleAttrValueEntities);
