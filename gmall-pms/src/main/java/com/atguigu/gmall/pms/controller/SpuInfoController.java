@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,10 @@ import com.atguigu.gmall.pms.service.SpuInfoService;
 public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
+
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @GetMapping
     public Resp<PageVo> querySpuPageVo(QueryCondition queryCondition,@RequestParam(value = "catId",defaultValue = "0")Long catId){
@@ -97,6 +102,8 @@ public class SpuInfoController {
     @PreAuthorize("hasAuthority('pms:spuinfo:update')")
     public Resp<Object> update(@RequestBody SpuInfoEntity spuInfo){
 		spuInfoService.updateById(spuInfo);
+
+		amqpTemplate.convertAndSend("GMALL-PMS-EXCHANGE","item.update",spuInfo.getId());
 
         return Resp.ok(null);
     }

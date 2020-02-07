@@ -13,12 +13,14 @@ import com.atguigu.gmall.pms.entity.SkuInfoEntity;
 import com.atguigu.gmall.pms.entity.SkuSaleAttrValueEntity;
 import com.atguigu.gmall.sms.vo.ItemSaleVo;
 import com.atguigu.gmall.wms.entity.WareSkuEntity;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +28,8 @@ import java.util.stream.Collectors;
 public class CartServiceImpl implements CartService{
 
     private static final String KEY_PREFIX = "cart:item:";
+
+    private static final String PRICE_PREFIX = "cart:price:";
 
     @Autowired
     private StringRedisTemplate template;
@@ -81,6 +85,7 @@ public class CartServiceImpl implements CartService{
             Resp<List<ItemSaleVo>> saleResp = smsClient.querySaleVoBySkuId(skuId);
             List<ItemSaleVo> itemSaleVos = saleResp.getData();
             cart.setSales(itemSaleVos);
+            template.opsForValue().set(PRICE_PREFIX+skuId,skuInfoEntity.getPrice().toString());
         }
         hashOps.put(skuIdString,JSON.toJSONString(cart));
     }
@@ -95,7 +100,12 @@ public class CartServiceImpl implements CartService{
         List<Object> values = userkeyHashOps.values();
         List<Cart> userKeyCarts = null;
         if (!CollectionUtils.isEmpty(values)){
-            userKeyCarts = values.stream().map(cartJson->JSON.parseObject(cartJson.toString(),Cart.class)).collect(Collectors.toList());
+            userKeyCarts = values.stream().map(cartJson->{
+                Cart cart = JSON.parseObject(cartJson.toString(), Cart.class);
+                String currentPrice = template.opsForValue().get(PRICE_PREFIX + cart.getSkuId());
+                cart.setCurntPrice(new BigDecimal(currentPrice));
+                return cart;
+            }).collect(Collectors.toList());
         }
         if (userId==null){
             return userKeyCarts;
@@ -109,6 +119,8 @@ public class CartServiceImpl implements CartService{
                     Integer count = cart.getCount();
                     cart = JSON.parseObject(cartString, Cart.class);
                     cart.setCount(cart.getCount()+count);
+                    String currentPrice = template.opsForValue().get(PRICE_PREFIX + cart.getSkuId());
+                    cart.setCurntPrice(new BigDecimal(currentPrice));
                 }
                 userIdHashOps.put(cart.getSkuId().toString(),JSON.toJSONString(cart));
             });
@@ -118,7 +130,14 @@ public class CartServiceImpl implements CartService{
 
         List<Object> userIdCartJsons = userIdHashOps.values();
         if(!CollectionUtils.isEmpty(userIdCartJsons)){
-            return userIdCartJsons.stream().map(cartJson->JSON.parseObject(cartJson.toString(),Cart.class)).collect(Collectors.toList());
+            return userIdCartJsons.stream().map(cartJson->{
+                Cart cart = JSON.parseObject(cartJson.toString(), Cart.class);
+                String currentPrice = template.opsForValue().get(PRICE_PREFIX + cart.getSkuId());
+                if (StringUtils.isNotBlank(currentPrice)) {
+                    cart.setCurntPrice(new BigDecimal(currentPrice));
+                }
+                return cart;
+            }).collect(Collectors.toList());
         }
         return null;
     }
