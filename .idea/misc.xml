@@ -16,6 +16,8 @@
         <option value="$PROJECT_DIR$/gmall.sms.interface/pom.xml" />
         <option value="$PROJECT_DIR$/gamall-sms-interface/pom.xml" />
         <option value="$PROJECT_DIR$/gmall-item/pom.xml" />
+        <option value="$PROJECT_DIR$/gmall-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/gmall-cart/pom.xml" />
       </list>
     </option>
   </component>

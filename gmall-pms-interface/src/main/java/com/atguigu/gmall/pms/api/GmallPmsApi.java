@@ -51,4 +51,7 @@ public interface GmallPmsApi {
 
     @GetMapping("pms/spuinfodesc/info/{spuId}")
     public Resp<SpuInfoDescEntity> desc(@PathVariable("spuId") Long spuId);
+
+    @GetMapping("pms/skusaleattrvalue/sku/{skuId}")
+    public Resp<List<SkuSaleAttrValueEntity>> querySaleAttrBySkuId(@PathVariable("skuId") Long skuId);
 }

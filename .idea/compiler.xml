@@ -9,6 +9,8 @@
         <module name="gamall-sms-interface" />
         <module name="gamall.sms.interface" />
         <module name="gmall-admin" />
+        <module name="gmall-auth" />
+        <module name="gmall-cart" />
         <module name="gmall-core" />
         <module name="gmall-gateway" />
         <module name="gmall-generator" />
@@ -20,6 +22,7 @@
         <module name="gmall-search" />
         <module name="gmall-sms" />
         <module name="gmall-ums" />
+        <module name="gmall-ums-interface" />
         <module name="gmall-wms" />
         <module name="gmall-wms-interface" />
       </profile>
@@ -29,6 +32,8 @@
       <module name="gamall.sms.interface" target="1.8" />
       <module name="gmall" target="1.8" />
       <module name="gmall-admin" target="1.8" />
+      <module name="gmall-auth" target="1.8" />
+      <module name="gmall-cart" target="1.8" />
       <module name="gmall-core" target="1.8" />
       <module name="gmall-gateway" target="1.8" />
       <module name="gmall-generator" target="1.8" />
@@ -40,6 +45,7 @@
       <module name="gmall-search" target="1.8" />
       <module name="gmall-sms" target="1.8" />
       <module name="gmall-ums" target="1.8" />
+      <module name="gmall-ums-interface" target="1.8" />
       <module name="gmall-wms" target="1.8" />
       <module name="gmall-wms-interface" target="1.8" />
     </bytecodeTargetLevel>

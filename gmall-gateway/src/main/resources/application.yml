@@ -12,6 +12,8 @@ spring:
           uri: lb://pms-service
           predicates:
             - Path=/pms/**
+          filters:
+            - Auth
         - id: oms-route
           uri: lb://oms-service
           predicates:
@@ -34,3 +36,8 @@ spring:
             - Path=/api/index/**
           filters:
             - RewritePath=/api(?<segment>/?.*), $\{segment}
+
+jwt:
+  token:
+    pubKeyPath: E:\\gmall-rsa\\rsa.pub
+    cookieName: gmall_token
