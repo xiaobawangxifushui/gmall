@@ -44,6 +44,9 @@ public class SpuInfoController {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
+
+
+
     @GetMapping
     public Resp<PageVo> querySpuPageVo(QueryCondition queryCondition,@RequestParam(value = "catId",defaultValue = "0")Long catId){
         PageVo pageVo = spuInfoService.querySpuPageVo(queryCondition,catId);

@@ -3,6 +3,7 @@ package com.atguigu.gmall.oms.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.atguigu.gmall.oms.vo.OrderSubmitVo;
 
 import com.atguigu.core.bean.PageVo;
 import com.atguigu.core.bean.QueryCondition;
@@ -24,7 +25,7 @@ import com.atguigu.gmall.oms.service.OrderService;
  *
  * @author lixianfeng
  * @email lxf@atguigu.com
- * @date 2019-12-31 13:56:12
+ * @date 2020-02-08 18:35:08
  */
 @Api(tags = "订单 管理")
 @RestController
@@ -32,6 +33,14 @@ import com.atguigu.gmall.oms.service.OrderService;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
+    @PostMapping("{userId}")
+    public Resp<OrderEntity> saveOrder(@RequestBody OrderSubmitVo orderSubmitVO, @PathVariable("userId")Long userId){
+
+        OrderEntity orderEntity = this.orderService.saveOrder(orderSubmitVO, userId);
+
+        return Resp.ok(orderEntity);
+    }
 
     /**
      * 列表

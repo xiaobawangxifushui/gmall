@@ -24,7 +24,7 @@ import com.atguigu.gmall.oms.service.PaymentInfoService;
  *
  * @author lixianfeng
  * @email lxf@atguigu.com
- * @date 2019-12-31 13:56:12
+ * @date 2020-02-08 18:35:08
  */
 @Api(tags = "支付信息表 管理")
 @RestController

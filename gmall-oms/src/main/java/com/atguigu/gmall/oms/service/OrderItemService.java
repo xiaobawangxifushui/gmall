@@ -11,7 +11,7 @@ import com.atguigu.core.bean.QueryCondition;
  *
  * @author lixianfeng
  * @email lxf@atguigu.com
- * @date 2019-12-31 13:56:12
+ * @date 2020-02-08 18:35:07
  */
 public interface OrderItemService extends IService<OrderItemEntity> {
 

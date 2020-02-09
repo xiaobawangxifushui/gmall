@@ -55,4 +55,10 @@ public class CartController {
         return Resp.ok(null);
     }
 
+    @GetMapping("{userId}")
+    public Resp<List<Cart>> queryCheckedCartByUserId(@PathVariable("userId")Long userId){
+        List<Cart> carts = cartService.queryCheckedCartByUserId(userId);
+        return Resp.ok(carts);
+    }
+
 }

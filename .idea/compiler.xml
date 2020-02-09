@@ -11,12 +11,15 @@
         <module name="gmall-admin" />
         <module name="gmall-auth" />
         <module name="gmall-cart" />
+        <module name="gmall-cart-interface" />
         <module name="gmall-core" />
         <module name="gmall-gateway" />
         <module name="gmall-generator" />
         <module name="gmall-index" />
         <module name="gmall-item" />
         <module name="gmall-oms" />
+        <module name="gmall-ooms-interface" />
+        <module name="gmall-order" />
         <module name="gmall-pms" />
         <module name="gmall-pms-interface" />
         <module name="gmall-search" />
@@ -34,12 +37,17 @@
       <module name="gmall-admin" target="1.8" />
       <module name="gmall-auth" target="1.8" />
       <module name="gmall-cart" target="1.8" />
+      <module name="gmall-cart-interface" target="1.8" />
       <module name="gmall-core" target="1.8" />
+      <module name="gmall-dms" target="1.8" />
       <module name="gmall-gateway" target="1.8" />
       <module name="gmall-generator" target="1.8" />
       <module name="gmall-index" target="1.8" />
       <module name="gmall-item" target="1.8" />
       <module name="gmall-oms" target="1.8" />
+      <module name="gmall-oms-interface" target="1.8" />
+      <module name="gmall-ooms-interface" target="1.8" />
+      <module name="gmall-order" target="1.8" />
       <module name="gmall-pms" target="1.8" />
       <module name="gmall-pms-interface" target="1.8" />
       <module name="gmall-search" target="1.8" />
